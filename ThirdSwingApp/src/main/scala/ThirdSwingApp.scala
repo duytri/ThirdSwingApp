@@ -2,6 +2,7 @@ package main.scala
 
 import swing._
 import event._
+import javax.swing.ImageIcon
 
 object ThirdSwingApp extends SimpleSwingApplication {
   def top = new MainFrame {
@@ -9,21 +10,27 @@ object ThirdSwingApp extends SimpleSwingApplication {
     title = "Chương trình phân lớp văn bản theo chủ đề"
     bounds = new Rectangle(100, 100, 700, 450)
     size = new Dimension(700, 450)
+    iconImage = toolkit.getImage("./img/logo.png")
 
     //~~~~~~~~~~~ Title ~~~~~~~~~~~
+    val icon = new Label {
+      icon = new ImageIcon("./img/logo.png")
+    }
+
     val lbTitle = new Label {
       text = "CHƯƠNG TRÌNH PHÂN LỚP VĂN BẢN THEO CHỦ ĐỀ"
-      font = new Font("Arial", java.awt.Font.BOLD, 20)
+      font = new Font("Dialog", java.awt.Font.BOLD, 20)
     }
-    
+
     val lbSubTitle = new Label {
       text = "Phòng thí nghiệm Hệ Thống Thông Tin - Trường Đại học Công Nghệ Thông Tin - ĐHQG TP.HCM"
-      font = new Font("Arial", java.awt.Font.ITALIC, 14)
+      font = new Font("Segoe UI Light", java.awt.Font.ITALIC, 14)
     }
-    
-    val pnTitle = new BoxPanel(Orientation.Vertical) {
-      contents += lbTitle
-      contents += lbSubTitle
+
+    val pnTitle = new BorderPanel() {
+      layout(icon) = BorderPanel.Position.West
+      layout(lbTitle) = BorderPanel.Position.Center
+      layout(lbSubTitle) = BorderPanel.Position.South
     }
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -40,13 +47,13 @@ object ThirdSwingApp extends SimpleSwingApplication {
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     //~~~~~~~~~~~ Center ~~~~~~~~~~~
-    val pnCenter = new BorderPanel{
+    val pnCenter = new BorderPanel {
       layout(pnTrain) = BorderPanel.Position.North
       layout(pnTest) = BorderPanel.Position.South
     }
-    
+
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    
+
     //~~~~~~~~~~~ Button ~~~~~~~~~~~
     val lbStatus = new Label(" Sẵn sàng...")
 

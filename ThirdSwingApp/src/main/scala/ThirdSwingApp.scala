@@ -10,11 +10,12 @@ object ThirdSwingApp extends SimpleSwingApplication {
   def top = new MainFrame {
     resizable = false
     title = "Chương trình phân lớp văn bản theo chủ đề"
-    iconImage = toolkit.getImage("./img/logo.png")
+    val iconURL = getClass.getResource("/img/logo.png")
+    iconImage = toolkit.createImage(iconURL)
 
     //~~~~~~~~~~~ Title ~~~~~~~~~~~
     val icon = new Label {
-      icon = new ImageIcon("./img/logo.png")
+      icon = new ImageIcon(iconURL)
     }
     val lbTitle = new Label {
       text = " CHƯƠNG TRÌNH PHÂN LỚP VĂN BẢN THEO CHỦ ĐỀ"
@@ -41,7 +42,7 @@ object ThirdSwingApp extends SimpleSwingApplication {
     val lbTrain = new Label {
       text = "CÁC THÔNG SỐ HUẤN LUYỆN"
     }
-    val pnTrainR1 = new BorderPanel{
+    val pnTrainR1 = new BorderPanel {
       layout(lbTrain) = BorderPanel.Position.West
     }
     ////~~~~~~~~~~~ Train-row2 ~~~~~~~~~~~
@@ -139,7 +140,7 @@ object ThirdSwingApp extends SimpleSwingApplication {
     val lbTest = new Label {
       text = "CÁC THÔNG SỐ KIỂM THỬ"
     }
-    val pnTestR1 = new BorderPanel{
+    val pnTestR1 = new BorderPanel {
       layout(lbTest) = BorderPanel.Position.West
     }
     val lbTestInput = new Label {
@@ -216,10 +217,21 @@ object ThirdSwingApp extends SimpleSwingApplication {
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     //~~~~~~~~~~~ Events ~~~~~~~~~~~
-    listenTo(btnClose)
+    listenTo(btnClose, btnTrain)
     reactions += {
       case ButtonClicked(`btnClose`) =>
-        closeOperation()
+        val res = Dialog.showConfirmation(contents.head,
+          "Bạn có thật sự muốn thoát?",
+          optionType = Dialog.Options.YesNo,
+          title = title)
+        if (res == Dialog.Result.Ok)
+          closeOperation()
+      case ButtonClicked(`btnTrain`) =>
+        Dialog.showMessage(contents.head,
+          "Quá trình huấn luyện hoàn tất!\nKết quả:\n - Precision: " + 1 + "\n - Recall: " + 1 + "\n - F-measure: " + 1,
+          messageType = Dialog.Message.Info,
+          title = title,
+          icon = new ImageIcon(iconURL))
     }
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   }
